@@ -1,0 +1,78 @@
+---
+title: "Module 2"
+author: "Hunter Ratliff, @HunterRatliff1"
+date: "March 11, 2016"
+output: html_document
+---
+
+# Abstract
+Fetal Alcohol Spectrum Disorder (FASD) describes the range of phenotypic defects resulting from ethanol exposure during embryonic development. FASD is a product of complex interactions between genetic predispositions and the environment, often resulting in a spectrum of altered neurological and facial defects. Here we examined the effects exposure to 1% ethanol solution had on the development of facial bones in two mutant strains of zebrafish (*131.5* and *Au15*). Specifically, we examined the length of the palatoquadrate (pq), ceratohyal (ch), and Mekel’s (m) bones, as well as the widths of the arches that they form. Our results found that these bones saw a statistically significant increase in bone length if the Au15 mutation was present, or if embryos were exposed to ethanol. These findings indicate an interaction between the environment and genetic mutations in the craniofacial development of zebrafish embryos.
+
+# Method
+## Embryos and treatment
+Embryos were provided by the [Eberhart lab](http://www.sbs.utexas.edu/eberhart/), and all  embryos were raised and cared for using established IACUC protocols approved by the University of Texas at Austin. Both mutant strains of zebrafish embryos (*131.5* and *Au15*) were treated with `1% EtOH` at 24 hpf, and embryos were allowed to develop for 4 days at 28.5°C. Embryos were then fixed in `2% PFA in PBS`, and washed 1 x 10 min with <code>100 mM Tris pH 7.5 / 10 mM $MgCl_2$</code>. 
+
+## Staining
+Embryos were stained for cartilage (using Alcian blue stain) for one day, and consequently destained with a series of `80%`, `50%`, and `25%` <code>EthOH / 100 mM Tris pH 7.5 / 10 mM $MgCl_2$</code> washes (3 x 5 min). Afterwards, embryos were bleached with <code>3% $H_2O_2$ / 0.5% KOH</code> for 1 x 10 min and washed for 2 x 10 min with `25% glycerol / 0.1% KOH`. Finally, embryos were stained for bone (using Alcian red stain) for 30 min, destained with `50% glycerol / 0.1% KOH`, and imaged on stereoscopes.
+
+# Results
+Our primary interest in this investigation was to explore the effects that ethanol exposure and genetic mutations had on the length of facial bones. We utilized the image processing software ImageJ to calculate a few key metrics from the images of our embryos. Among these metrics, we measured the length of three important facial bones (see Figure 2): *Mekel’s* (m; dark green), *palatoquadrate* (pq; light green), and *ceratohyal* (ch; red). Additionally, we measured the width that these bones spanned laterally (illustrated by the dotted/dashed lines in Figure 2).
+
+## Linear Regression of Bone Length
+After performing a series of linear regressions modeling the length of the key facial bones described above, we found that treatment with ethanol, the width that the bones spanned (see Figure 2), and the mutations (*131.5* or *Au15*) were all significant predictors of the bone length. Our model exhibited a residual standard error of `29.74 μm` on `54 degrees of freedom` (p-value: < 2.2 x ${10}^{16}$) and accounted for `80.3%` of overall variance ($R^2$=`0.8197`; adjusted $R^2$=`0.803`). The summary of our model has been included below:
+
+```{r, include=F}
+require(googlesheets)
+require(dplyr)
+require(ggplot2)
+require(ggthemes)
+require(ggfortify)
+require(broom)
+
+# gs_title("Module 02") %>% gs_read_csv("Data2") %>% tbl_df() %>% 
+#   gather(Segment, Length, ch:pq) %>%
+#   spread(Location, Length) %>%
+#   mutate(Length = Bottom + Top) %>%
+#   select(-Bottom, -Top) %>% saveRDS("~/Github/BIO349L/Module02/Data.RDS")
+
+df <- readRDS("~/Github/BIO349L/Module02/Data.RDS")
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE, fig.height=12, fig.width=10}
+model <- lm(data=df, Length~Width+Segment+Treatment+Gene) 
+glance(model)
+tidy(model)
+```
+
+<br><hr><br>
+
+```{r, echo=F, fig.height=8, fig.width=10}
+model %>%
+  augment(data = df) %>%
+  ggplot(aes(x=Width, color=Segment)) + 
+  geom_linerange(aes(ymax=.fitted+.se.fit, ymin=.fitted-.se.fit), color="black", alpha=0.8) +
+  geom_point(aes(y=.fitted, shape=Gene)) +
+  scale_color_fivethirtyeight() +
+  guides(size=F) + labs(y="Length of Bone (µm)", x="Width (µm)") +
+  theme_economist_white() + theme(axis.title=element_text())
+last_plot() + facet_grid(Gene~Treatment) + guides(color=F, shape=F) 
+```
+
+<br><hr><br>
+
+```{r, echo=F, fig.height=12, fig.width=10}
+model %>%
+  autoplot(which = 1:6, data=df, color="Gene") + 
+  theme_fivethirtyeight() + theme(axis.title=element_text())
+```
+
+```{r}
+df %>% group_by(Gene, Segment, Treatment) %>% summarise(m = mean(Length), sd = sd(Length)) %>%
+  ggplot(aes(x=Treatment, fill=Segment)) + 
+  geom_bar(aes(y=m), stat="identity", position = "dodge") + geom_errorbar(aes(ymax=m+sd, ymin=m-sd), position = "dodge") +
+  scale_color_fivethirtyeight() +
+  labs(y="Length of Bone (µm)", x="Treatment") +
+  theme_economist_white() + theme(axis.title=element_text()) + facet_wrap("Gene")
+```

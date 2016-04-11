@@ -1,0 +1,53 @@
+"Treatment","Group.Code","Arms0","Arms1","Arms2"
+"Control","E",2,0,1
+"Control","E",2,0,3
+"Control","E",0,0,2
+"Control","E",1,0,1
+"Control","E",4,1,10
+"Control","E",5,1,11
+"NaF (6-24h)","F",1,0,1
+"NaF (6-24h)","F",1,0,1
+"NaF (6-24h)","F",3,0,2
+"NaF (6-24h)","F",0,0,1
+"NaF (6-24h)","F",1,2,11
+"NaF (6-24h)","F",3,1,3
+"NaF (6-24h)","F",4,0,4
+"Control","C",2,0,4
+"Control","C",4,1,5
+"Control","C",2,1,15
+"Control","C",0,0,3
+"Control","C",0,1,3
+"Control","C",1,0,1
+"Control","C",7,4,9
+"Control","C",2,1,5
+"NaF (17-24h)","D",7,0,2
+"NaF (17-24h)","D",9,3,5
+"NaF (17-24h)","D",3,2,5
+"NaF (17-24h)","D",10,9,5
+"Control","B",4,5,12
+"Control","B",5,2,5
+"Control","B",16,3,5
+"Control","B",2,0,4
+"Control","B",16,3,5
+"Control","B",6,3,15
+"Control","B",4,5,11
+"NaF (5-24h)","A",7,7,38
+"NaF (5-24h)","A",5,2,15
+"NaF (5-24h)","A",4,1,5
+"NaF (5-24h)","A",2,0,5
+"NaF (5-24h)","A",4,1,5
+"NaF (5-24h)","A",2,1,5
+"NaF (5-24h)","A",3,3,14
+"Control ","J",6,2,18
+"Control ","J",6,8,10
+"Control ","J",0,0,20
+"Control ","J",1,0,19
+"Control ","J",1,1,18
+"Control ","J",0,0,20
+"NaF (3-19h)","H",3,1,16
+"NaF (3-19h)","H",15,20,25
+"NaF (3-19h)","H",3,9,21
+"NaF (19-26h)","G",3,0,17
+"NaF (19-26h)","G",4,4,12
+"NaF (19-26h)","G",6,6,48
+"NaF (19-26h)","G",0,2,18

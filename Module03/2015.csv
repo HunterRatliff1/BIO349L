@@ -1,0 +1,233 @@
+"Time","Conc","Tx","Sample","Arms0","Arms1","Arms2"
+"2-48 h","2 mM","2-48 hours","A",15,4,1
+"2-48 h","2 mM","2mM 2-48 hours","A",22,2,3
+"2-48 h","2 mM","2mM 2-48 hours","A",0,16,4
+"2-48 h","2 mM","2mM 2-48 hours","A",9,2,2
+"2-48 h","2 mM","2mM 2-48 hours","A",9,0,4
+"2-48 h","2 mM","2mM 2-48 hours","A",7,7,8
+"2-48 h","2 mM","2mM 2-48 hours","A",20,6,4
+"2-48 h","2 mM","2mM 2-48 hours","A",15,5,0
+"2-48 h","2 mM","2mM 2-48 hours","A",26,0,0
+"2-48 h","2 mM","2mM 2-48 hours","A",22,0,0
+"2-48 h","2 mM","2mM 2-48 hours","A",24,2,2
+"2-48 h","2 mM","2mM 2-48 hours","A",12,5,4
+"2-48 h","2 mM","2mM 2-48 hours","A",18,3,1
+"2-48 h","2 mM","2mM 2-48 hours","A",12,4,4
+"2-48 h","2 mM","2mM 2-48 hours","A",13,3,4
+"2-48 h","2 mM","2mM 2-48 hours","A",4,3,11
+"2-48 h","2 mM","2mM 2-48 hours","A",19,2,0
+"2-48 h","2 mM","2mM 2-48 hours","A",19,1,2
+"2-48 h","2 mM","2mM 2-48 hours","A",4,4,9
+"2-48 h","2 mM","2mM 2-48 hours","A",5,8,4
+"2-48 h","2 mM","2mM 2-48 hours","A",8,8,5
+"2-48 h","4 mM","4mM 2-48 hours","B",12,2,3
+"2-48 h","4 mM","4mM 2-48 hours","B",15,2,0
+"2-48 h","4 mM","4mM 2-48 hours","B",7,5,20
+"2-48 h","4 mM","4mM 2-48 hours","B",14,0,0
+"2-48 h","4 mM","4mM 2-48 hours","B",15,0,0
+"2-48 h","4 mM","4mM 2-48 hours","B",18,0,2
+"2-48 h","4 mM","4mM 2-48 hours","B",17,0,3
+"2-48 h","4 mM","4mM 2-48 hours","B",5,2,6
+"2-48 h","4 mM","4mM 2-48 hours","B",14,2,3
+"2-48 h","4 mM","4mM 2-48 hours","B",2,0,1
+"2-48 h","4 mM","4mM 2-48 hours","B",3,0,0
+"2-48 h","4 mM","4mM 2-48 hours","B",12,4,5
+"2-48 h","4 mM","4mM 2-48 hours","B",14,0,0
+"2-48 h","4 mM","4mM 2-48 hours","B",23,0,0
+"2-48 h","4 mM","4mM 2-48 hours","B",8,7,11
+"2-48 h","4 mM","4mM 2-48 hours","B",7,5,8
+"2-48 h","4 mM","4mM 2-48 hours","B",15,5,0
+"2-48 h","4 mM","4mM 2-48 hours","B",16,3,14
+"2-48 h","4 mM","4mM 2-48 hours","B",37,9,8
+"2-48 h","4 mM","4mM 2-48 hours","B",28,1,7
+"2-48 h","4 mM","4mM 2-48 hours","B",14,3,9
+"24-48 h","2 mM","2mM 24-48 hours","C",6,8,10
+"24-48 h","2 mM","2mM 24-48 hours","C",4,2,16
+"24-48 h","2 mM","2mM 24-48 hours","C",4,5,16
+"24-48 h","2 mM","2mM 24-48 hours","C",2,0,19
+"24-48 h","2 mM","2mM 24-48 hours","C",1,2,20
+"24-48 h","2 mM","2mM 24-48 hours","C",1,2,17
+"24-48 h","2 mM","2mM 24-48 hours","C",3,1,16
+"24-48 h","2 mM","2mM 24-48 hours","C",8,4,22
+"24-48 h","2 mM","2mM 24-48 hours","C",9,4,19
+"24-48 h","2 mM","2mM 24-48 hours","C",4,2,15
+"24-48 h","2 mM","2mM 24-48 hours","C",2,2,19
+"24-48 h","2 mM","2mM 24-48 hours","C",9,2,19
+"24-48 h","2 mM","2mM 24-48 hours","C",2,0,15
+"24-48 h","2 mM","2mM 24-48 hours","C",4,9,15
+"24-48 h","2 mM","2mM 24-48 hours","C",2,0,5
+"24-48 h","2 mM","2mM 24-48 hours","C",2,0,5
+"24-48 h","4 mM","4mM 24-48 hours","D",20,6,14
+"24-48 h","4 mM","4mM 24-48 hours","D",2,4,8
+"24-48 h","4 mM","4mM 24-48 hours","D",0,4,8
+"24-48 h","4 mM","4mM 24-48 hours","D",16,11,7
+"24-48 h","4 mM","4mM 24-48 hours","D",5,1,22
+"24-48 h","4 mM","4mM 24-48 hours","D",4,1,21
+"24-48 h","4 mM","4mM 24-48 hours","D",3,5,15
+"24-48 h","4 mM","4mM 24-48 hours","D",6,4,20
+"24-48 h","4 mM","4mM 24-48 hours","D",8,9,3
+"24-48 h","4 mM","4mM 24-48 hours","D",8,8,9
+"24-48 h","4 mM","4mM 24-48 hours","D",5,1,5
+"24-48 h","4 mM","4mM 24-48 hours","D",0,0,21
+"24-48 h","4 mM","4mM 24-48 hours","D",12,2,10
+"24-48 h","4 mM","4mM 24-48 hours","D",14,4,8
+"24-48 h","4 mM","4mM 24-48 hours","D",5,2,13
+"24-48 h","4 mM","4mM 24-48 hours","D",0,0,20
+"24-48 h","4 mM","4mM 24-48 hours","D",5,1,10
+"24-48 h","4 mM","4mM 24-48 hours","D",10,1,10
+"24-48 h","4 mM","4mM 24-48 hours","D",0,2,4
+"24-48 h","4 mM","4mM 24-48 hours","D",2,1,4
+"24-48 h","4 mM","4mM 24-48 hours","D",0,4,1
+"2-24 h","2 mM","2mM 2-24 hours","E",10,5,3
+"2-24 h","2 mM","2mM 2-24 hours","E",10,4,6
+"2-24 h","2 mM","2mM 2-24 hours","E",5,4,5
+"2-24 h","2 mM","2mM 2-24 hours","E",19,3,1
+"2-24 h","2 mM","2mM 2-24 hours","E",13,4,1
+"2-24 h","2 mM","2mM 2-24 hours","E",8,11,3
+"2-24 h","2 mM","2mM 2-24 hours","E",11,8,2
+"2-24 h","2 mM","2mM 2-24 hours","E",7,5,5
+"2-24 h","2 mM","2mM 2-24 hours","E",15,3,5
+"2-24 h","2 mM","2mM 2-24 hours","E",6,3,12
+"2-24 h","2 mM","2mM 2-24 hours","E",12,5,4
+"2-24 h","2 mM","2mM 2-24 hours","E",7,4,2
+"2-24 h","2 mM","2mM 2-24 hours","E",10,2,8
+"2-24 h","2 mM","2mM 2-24 hours","E",11,2,8
+"2-24 h","2 mM","2mM 2-24 hours","E",11,5,6
+"2-24 h","2 mM","2mM 2-24 hours","E",6,2,1
+"2-24 h","2 mM","2mM 2-24 hours","E",6,2,1
+"2-24 h","2 mM","2mM 2-24 hours","E",5,2,1
+"2-24 h","2 mM","2mM 2-24 hours","E",15,4,2
+"2-24 h","4 mM","4mM 2-24 hours","F",15,4,1
+"2-24 h","4 mM","4mM 2-24 hours","F",8,4,10
+"2-24 h","4 mM","4mM 2-24 hours","F",10,5,5
+"2-24 h","4 mM","4mM 2-24 hours","F",4,9,10
+"2-24 h","4 mM","4mM 2-24 hours","F",18,9,3
+"2-24 h","4 mM","4mM 2-24 hours","F",18,1,1
+"2-24 h","4 mM","4mM 2-24 hours","F",15,4,1
+"2-24 h","4 mM","4mM 2-24 hours","F",11,1,10
+"2-24 h","4 mM","4mM 2-24 hours","F",13,3,20
+"2-24 h","4 mM","4mM 2-24 hours","F",15,5,0
+"2-24 h","4 mM","4mM 2-24 hours","F",15,0,3
+"2-24 h","4 mM","4mM 2-24 hours","F",15,4,1
+"2-24 h","4 mM","4mM 2-24 hours","F",18,2,0
+"2-24 h","4 mM","4mM 2-24 hours","F",20,1,2
+"2-24 h","4 mM","4mM 2-24 hours","F",6,4,10
+"2-24 h","4 mM","4mM 2-24 hours","F",16,2,9
+"2-24 h","4 mM","4mM 2-24 hours","F",41,2,0
+"2-24 h","4 mM","4mM 2-24 hours","F",26,6,2
+NA,"0 mM","Control (untreated)","G",8,10,12
+NA,"0 mM","Control (untreated)","G",0,1,4
+NA,"0 mM","Control (untreated)","G",3,1,11
+NA,"0 mM","Control (untreated)","G",2,5,20
+NA,"0 mM","Control (untreated)","G",1,1,18
+NA,"0 mM","Control (untreated)","G",4,2,22
+NA,"0 mM","Control (untreated)","G",2,5,24
+NA,"0 mM","Control (untreated)","G",1,2,15
+NA,"0 mM","Control (untreated)","G",0,2,18
+NA,"0 mM","Control (untreated)","G",1,2,26
+NA,"0 mM","Control (untreated)","G",0,0,20
+NA,"0 mM","Control (untreated)","G",3,3,4
+NA,"0 mM","Control (untreated)","G",1,0,26
+NA,"0 mM","Control (untreated)","G",1,0,6
+NA,"0 mM","Control (untreated)","G",1,0,5
+NA,"0 mM","Control (untreated)","G",0,0,28
+NA,"0 mM","Control (untreated)","G",0,0,21
+NA,"0 mM","Control (untreated)","G",2,2,31
+NA,"0 mM","Control (untreated)","G",1,2,29
+NA,"0 mM","Control (untreated)","G",2,0,26
+NA,"0 mM","Control (untreated)","G",4,4,17
+NA,"0 mM","Control (untreated)","G",4,5,18
+NA,"0 mM","Control (untreated)","G",20,0,0
+NA,"0 mM","Control (untreated)","G",0,0,20
+NA,"0 mM","Control (untreated)","G",2,2,9
+NA,"0 mM","Control (untreated)","G",0,0,20
+NA,"0 mM","Control (untreated)","G",20,0,0
+NA,"0 mM","Control (untreated)","G",0,2,18
+NA,"0 mM","Control (untreated)","G",1,5,16
+NA,"0 mM","Control (untreated)","G",1,3,23
+NA,"0 mM","Control (untreated)","G",1,2,18
+NA,"0 mM","Control (untreated)","G",0,0,20
+NA,"0 mM","Control (untreated)","G",0,0,21
+NA,"0 mM","Control (untreated)","G",2,2,37
+NA,"0 mM","Control (untreated)","G",5,7,41
+NA,"0 mM","Control (untreated)","G",1,1,22
+NA,"0 mM","Control (untreated)","G",0,0,27
+NA,"0 mM","Control (untreated)","G",0,0,25
+NA,"0 mM","Control (untreated)","G",0,0,20
+NA,"0 mM","Control (untreated)","G",1,3,30
+NA,"0 mM","Control (untreated)","G",0,5,23
+NA,"0 mM","Control (untreated)","G",0,0,36
+NA,"0 mM","Control (untreated)","G",2,1,37
+NA,"0 mM","Control (untreated)","G",0,1,22
+NA,"0 mM","Control (untreated)","G",0,0,25
+NA,"0 mM","Control (untreated)","G",11,14,60
+NA,"0 mM","Control (untreated)","G",11,14,60
+NA,"0 mM","Control (untreated)","G",1,4,20
+NA,"0 mM","Control (untreated)","G",1,0,20
+NA,"0 mM","Control (untreated)","G",5,20,45
+NA,"0 mM","Control (untreated)","G",0,7,4
+NA,"0 mM","Control (untreated)","G",0,0,16
+NA,"0 mM","Control (untreated)","G",1,3,10
+NA,"0 mM","Control (untreated)","G",1,6,41
+NA,"0 mM","Control (untreated)","G",1,1,39
+NA,"0 mM","Control (untreated)","G",2,5,12
+NA,"0 mM","Control (untreated)","G",0,1,44
+NA,"0 mM","Control (untreated)","G",3,1,75
+NA,"0 mM","Control (untreated)","G",1,1,24
+NA,"0 mM","Control (untreated)","G",0,0,4
+NA,"0 mM","Control (untreated)","G",0,0,4
+NA,"0 mM","Control (untreated)","G",0,0,30
+NA,"0 mM","Control (untreated)","H",0,7,13
+NA,"0 mM","Control (untreated)","H",4,5,12
+NA,"0 mM","Control (untreated)","H",15,4,13
+NA,"0 mM","Control (untreated)","H",4,0,16
+NA,"0 mM","Control (untreated)","H",7,8,12
+NA,"0 mM","Control (untreated)","H",1,0,13
+NA,"0 mM","Control (untreated)","H",4,7,16
+NA,"0 mM","Control (untreated)","H",4,1,46
+NA,"0 mM","Control (untreated)","H",5,2,16
+NA,"0 mM","Control (untreated)","H",1,1,20
+NA,"0 mM","Control (untreated)","H",0,1,20
+NA,"0 mM","Control (untreated)","H",6,3,15
+NA,"0 mM","Control (untreated)","H",0,0,20
+NA,"0 mM","Control (untreated)","H",5,1,14
+NA,"0 mM","Control (untreated)","H",3,0,24
+NA,"0 mM","Control (untreated)","H",1,1,18
+NA,"0 mM","Control (untreated)","H",1,6,20
+NA,"0 mM","Control (untreated)","H",3,7,10
+NA,"0 mM","Control (untreated)","H",1,6,20
+NA,"0 mM","Control (untreated)","H",3,3,22
+NA,"0 mM","Control (untreated)","H",0,0,23
+NA,"0 mM","Control (untreated)","H",17,6,22
+NA,"0 mM","Control (untreated)","H",3,3,15
+NA,"0 mM","Control (untreated)","H",9,12,23
+NA,"0 mM","Control (untreated)","H",4,6,15
+NA,"0 mM","Control (untreated)","H",3,1,13
+NA,"0 mM","Control (untreated)","H",0,1,19
+NA,"0 mM","Control (untreated)","H",1,0,2
+NA,"0 mM","Control (untreated)","H",0,1,17
+NA,"0 mM","Control (untreated)","H",2,0,20
+NA,"0 mM","Control (untreated)","H",4,2,17
+NA,"0 mM","Control (untreated)","H",0,0,20
+NA,"0 mM","Control (untreated)","H",6,6,8
+NA,"0 mM","Control (untreated)","H",7,5,40
+NA,"0 mM","Control (untreated)","H",1,3,16
+NA,"0 mM","Control (untreated)","H",3,0,44
+NA,"0 mM","Control (untreated)","H",4,3,13
+NA,"0 mM","Control (untreated)","H",6,2,10
+NA,"0 mM","Control (untreated)","H",2,3,15
+NA,"0 mM","Control (untreated)","H",2,1,19
+NA,"0 mM","Control (untreated)","H",5,1,15
+NA,"0 mM","Control (untreated)","H",6,1,12
+NA,"0 mM","Control (untreated)","H",3,1,5
+NA,"0 mM","Control (untreated)","H",4,6,14
+NA,"0 mM","Control (untreated)","H",1,1,35
+NA,"0 mM","Control (untreated)","H",1,0,19
+NA,"0 mM","Control (untreated)","H",2,1,18
+NA,"0 mM","Control (untreated)","H",3,0,20
+NA,"0 mM","Control (untreated)","H",3,2,18
+NA,"0 mM","Control (untreated)","H",1,3,17
+NA,"0 mM","Control (untreated)","H",1,1,19
+NA,"0 mM","Control (untreated)","H",8,4,15
+NA,"0 mM","Control (untreated)","H",5,4,16
+NA,"0 mM","Control (untreated)","H",1,1,23

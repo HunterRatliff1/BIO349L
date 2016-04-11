@@ -1,0 +1,281 @@
+---
+title: "Analysis of a priori data"
+author: "Hunter Ratliff, @HunterRatliff1"
+date: "March 22, 2016"
+html_document:
+    theme: united
+    highlight: zenburn
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r, include=FALSE}
+# require(googlesheets)
+require(rio)
+
+require(dplyr)
+require(tidyr)
+
+require(ggplot2)
+require(ggthemes)
+require(scales)
+```
+
+First, we'll read the data from the [Google Sheet](https://goo.gl/DKtQGy) from 
+where it is hosted. We'll save the data as `2015.csv` and `2016.csv` in a `Data/` 
+sub-directory:
+
+```{r, eval=FALSE}
+gs_title("Module3") %>% 
+  gs_read_csv("2015") %>%
+  group_by(Time, MolarityNaF) %>% 
+  mutate(Total = Arms0 + Arms1 + Arms2) %>% 
+  export("Data/2015.csv")
+
+gs_title("Module3") %>% 
+  gs_read_csv("2016") %>%
+  group_by(Treatment, Time) %>% 
+  mutate(Total = Arms0 + Arms1 + Arms2) %>% 
+  export("Data/2016.csv")
+```
+
+Then, we read the data in as a data.frame:
+
+```{r}
+df_15 <- import("Data/2015.csv") %>% tbl_df()
+df_16 <- import("Data/2016.csv") %>% tbl_df()
+```
+
+# Variables
+
+## Dependnet Varaibles
+
+These datasets contains `r comma(sum(df_16$Total))` observations from 2016 and 
+`r comma(sum(df_15$Total))` observations from 2015.
+
+These datasets focus on the development of sea urchin embryos that were exposed to 
+sodium fluoride (NaF) during development. In the 2015 set, both the concentration 
+of NaF and the duration of exposure were varied. The total number of observations 
+for both these variables can been seen in the table output below:
+
+```{r Totals_2015, echo=F}
+df_15 %>% 
+  rename(NaF=MolarityNaF) %>%
+  group_by(Time, NaF) %>% 
+  summarise(Total = sum(Total, na.rm = T)) %>%
+  spread(Time, Total)
+```
+
+In the 2016 set, the concentration of NaF was further simplified to a binary 
+variable (either `control` or `NaF`), and more nuanced time intervals were examined. 
+These time intervals are illustrated in the plot below:
+
+```{r, echo=FALSE, fig.align='center', fig.height=4, warning=FALSE}
+df_16 %>% 
+  mutate(Time = stringr::str_replace(Time, pattern=" h", replacement="")) %>%
+  separate(col=Time, into=c("Start", "End"), sep="-", convert=T) %>%
+  group_by(Treatment, Start, End) %>%
+  summarise(Total = sum(Total, na.rm = T)) %>%
+  ggplot(aes(x=Total)) + 
+  geom_errorbar(aes(ymin=Start, ymax=End), color="red") + 
+  labs(y="Time Exposed (hours)", x="Number Exposed", 
+       title="Duration Exposed to NaF (2016)") +
+  coord_flip() + theme_fivethirtyeight() +
+  theme(axis.title=element_text())
+```
+
+Note: <em>Because the control embryos weren't exposed, and thus had no interval of 
+exposure, they've been omitted from the above plot (n=
+`r comma(sum(df_16$Total[df_16$Treatment=="Control"]))`).</em>
+
+## Independnet Varaibles
+
+The variable being observed in both these datasets is the number of "arms" that 
+developed. Under normal developmental circumstances embryos develop two arms, but 
+exposure to NaF is believed to reduce the number of arms that develop. 
+
+For each group, the number of embryos with 0, 1, and 2 arms were counted and the 
+total recorded. 
+
+# Results
+
+## Results: Concentration of NaF
+
+```{r}
+Plot1 <- import("Data/2015.csv") %>% 
+  ggplot(aes(x=Arms2/Total, fill=factor(MolarityNaF), 
+             color=factor(MolarityNaF))) +
+  geom_density(alpha=0.5) + 
+  labs(x="Had Two Arms") + 
+  scale_fill_brewer(name="Molarity of NaF", palette = 4) +
+  scale_color_brewer(name="Molarity of NaF", palette = 2, type = "qual") +
+  scale_x_continuous(labels = percent) + 
+  theme_fivethirtyeight() + theme(axis.title=element_text())
+```
+```{r, echo=FALSE, fig.align='center', fig.height=5.5}
+Plot1 + labs(title="Concentration of NaF (2015)")
+```
+
+Above is a density plot illustrating the percentage of embryos who developed both 
+arms, with each density curve colored by the concentration of NaF embryos were 
+exposed to during development. It's evidently clear that no exposure to NaF
+(the lightest blue) has a severe rightward skew. This skew indicates that the
+vast majority of embryos in the control group developed normally. 
+
+Unsurprisingly, the embryos exposed to NaF had a leftward skew, indicating a good 
+number of embryos didn't develop to have two arms. More importantly, it appears 
+that both levels of NaF exposure (2 mM and 4 mM) have similar density distributions.
+This indicates that the level of exposure isn't nearly as important as wither or 
+not embryos are exposed in the first place. 
+
+This same observation can be seen if we examine the within-group distribution for 
+each NaF concentration. The bar plot below shows the relative percentage of embryos 
+with 0, 1, or 2 arms for each treatment group. The percentages are nearly identical 
+for both concentrations, but show a marked difference from the control group 
+(represented by 0 mols/L of NaF).
+
+```{r, echo=FALSE, fig.align='center', fig.height=4}
+df_15 %>% 
+  group_by(NaF=MolarityNaF, Treatment) %>%
+  summarise(
+    Total = sum(Total),
+    Arms0 = sum(Arms0)/Total,
+    Arms1 = sum(Arms1)/Total,
+    Arms2 = sum(Arms2)/Total) %>%
+  gather(Arms, Percent, Arms0:Arms2) %>%
+  mutate(Arms = stringr::str_replace(Arms, "Arms", "")) %>%
+  
+  ggplot(aes(x=factor(NaF), y=Percent, fill=factor(Arms))) + geom_bar(stat="identity") + 
+  
+  scale_y_continuous(labels = percent) + coord_flip() +
+  scale_fill_brewer(name="# of Arms", type="qual", palette=3) +
+  theme_fivethirtyeight() + theme(axis.title=element_text()) +
+  labs(x="NaF [mols/L]", y="Percent of Total",
+       title="Number of Arms by NaF Concentration", 
+       subtitle="(Voke, 2015)")
+```
+
+```{r}
+df_15 %>% 
+  group_by(NaF=MolarityNaF, Treatment) %>%
+  summarise(
+    Total = sum(Total),
+    Arms0 = sum(Arms0)/Total,
+    Arms1 = sum(Arms1)/Total,
+    Arms2 = sum(Arms2)/Total) %>%
+  gather(Arms, Percent, Arms0:Arms2) %>%
+  mutate(
+    Arms = stringr::str_replace(Arms, "Arms", ""),
+    Arms = paste(Arms, "Arms"),
+    Percent = percent(Percent)) %>%
+  spread(Arms, Percent) %>%
+  select(-Treatment, -Total) %>%
+  knitr::kable()
+```
+
+<br><br>
+
+## Results: Onset & Duration of Exposure
+
+Given that the concentration of NaF doesn't seem to be that important, the next 
+logical question becomes about the timing of exposure. To explore this in more
+detail, we'll take the same density plot that we discussed above, and facet it by
+each time interval of exposure:
+
+```{r, echo=FALSE, fig.align='center', fig.height=4}
+Plot1 + facet_wrap("Time") + 
+  labs(title="Concentration of NaF (2015)",
+       subtitle="Facet by Time of Exposure")
+```
+
+This illustrates the effects of early exposure in determining the number of arms 
+that eventually form. In the top two facets (`2-24 h` and `2-48 h`) show a marked 
+decrease in the percentage of normal embryos that develop, as indicated by the 
+leftward skew. On the other hand, embryos that were exposed after `24 h` or not
+exposed at all (i.e. the `NA` facet) display a rightward skew. 
+
+From this we can conclude that early exposure is a key component in disrupting arm
+development. Likewise, we see that these new density distributions hold true to 
+our findings regarding the insignificance of the concentration of NaF.
+
+Again, this can also be illustrated using bar plots:
+
+```{r, echo=FALSE, fig.align='center', fig.height=4}
+df_15 %>% 
+  group_by(Time, Treatment) %>%
+  summarise(
+    Total = sum(Total),
+    Arms0 = sum(Arms0)/Total,
+    Arms1 = sum(Arms1)/Total,
+    Arms2 = sum(Arms2)/Total) %>%
+  gather(Arms, Percent, Arms0:Arms2) %>%
+  mutate(Arms = stringr::str_replace(Arms, "Arms", "")) %>%
+  
+  ggplot(aes(x=Time, y=Percent, fill=factor(Arms))) + 
+  geom_bar(stat="identity", color="black") + 
+  
+  scale_y_continuous(labels = percent) + coord_flip() +
+  scale_fill_brewer(name="# of Arms", type="qual", palette=4) +
+  theme_fivethirtyeight() + theme(axis.title=element_text()) +
+  labs(x="Time treated with NaF", y="Percent of Total",
+       title="Arms by Time Exposed (2015)")
+```
+
+Next, we'll take a look at the 2016 data. As mentioned above, this dataset takes
+a deeper look into the timing of exposure in the first 24 hours of development.
+
+```{r, echo=FALSE, fig.align='center', fig.height=4}
+df_16 %>%
+  replace_na(list(Time="Control")) %>%
+  group_by(Treatment, Time) %>%
+  summarise(
+    Total = sum(Total),
+    Arms0 = sum(Arms0)/Total,
+    Arms1 = sum(Arms1)/Total,
+    Arms2 = sum(Arms2)/Total
+  ) %>%
+  gather(Arms, Percent, Arms0:Arms2) %>% 
+  mutate(Arms = stringr::str_replace(Arms, "Arms", "")) %>%
+  
+  ggplot(aes(x=Time, y=Percent, fill=Arms)) + 
+  geom_bar(stat="identity", color="black") +
+  
+  scale_y_continuous(labels = percent) + coord_flip() +
+  scale_fill_brewer(name="# of Arms", type="qual", palette=4) +
+  theme_fivethirtyeight() + theme(axis.title=element_text()) +
+  labs(x="Time treated with NaF", y="Percent of Total",
+       title="Arms by Time Exposed (2016)")
+  # facet_grid(.~Treatment, scales = "free_x")
+  # ggplot(aes(x=Arms2, ))
+```
+
+********************************************************************************
+
+```
+--- LICENSE ---
+
+Copyright (C) 2016 Hunter Ratliff
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+In the spirit of [Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html),
+below is the information About the R Session at the time it was compiled:
+
+```{r Session_info, echo=TRUE, collapse=TRUE}
+devtools::session_info()
+```

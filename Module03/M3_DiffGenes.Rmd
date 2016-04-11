@@ -1,0 +1,205 @@
+---
+title: "Module 3 - Diff Genes"
+author: "Hunter Ratliff, @HunterRatliff1"
+date: "March 10, 2016"
+output: html_document
+---
+
+**Author:** `Hunter Ratliff` @[HunterRatliff1](https://twitter.com/HunterRatliff1)  
+
+```{r, include=F}
+require(rio)
+require(dplyr)
+require(ggplot2)
+require(ggthemes)
+require(ggrepel)
+require(pvclust)
+
+source("~/Github/Meta/Citations/Citation Function.R")
+
+diff_gene <- rio::import("Diff_genes_48.csv", setclass = "tbl_df") %>%
+  filter(status=="OK", sample_1 == "Cont", sample_2 == "NaF") %>%
+  select(-status, -sample_1, -sample_2) %>%
+  rename(Log2fc=`log2(fold_change)`) %>%
+  mutate(
+    Log2fc    = as.numeric(Log2fc),
+    test_stat = as.numeric(test_stat)) %>%
+  rename(Ctl=value_1, NaF=value_2) %>%
+  mutate(
+    locus = stringr::str_extract(locus, "LVA.+-RA"),
+    locus = stringr::str_replace_all(locus, "-RA", ""),
+    UD    = ifelse(Log2fc<0, "Down", "Up")) %>%
+  group_by(locus) %>%
+  top_n(1, wt=abs(Log2fc)) %>% ungroup() %>%
+  filter(!is.na(locus), Log2fc!=Inf) %>%
+  select(-test_id, -gene, -test_stat) %>% 
+  group_by(locus) %>%
+  mutate(isTarget = stringr::str_detect(locus, pattern="LVA_002048")) %>%
+  mutate(isTarget = ifelse(isTarget, "LVA_002048", " ")) %>% 
+  ungroup() %>%
+  arrange(desc(abs(Log2fc)))
+  
+# require(googlesheets)  
+# x <- gs_title("RNA-Seq") %>% gs_read_csv("GO2") 
+
+#   rio::import("Diff_genes_48.csv", setclass = "tbl_df") %>%
+#   filter(status=="OK", sample_1 == "Cont", sample_2 == "NaF") %>%
+#   select(-status, -sample_1, -sample_2) %>%
+#   rename(Log2fc=`log2(fold_change)`, Ctl=value_1, NaF=value_2) %>%
+#   mutate(
+#     Log2fc    = as.numeric(Log2fc),
+#     test_stat = as.numeric(test_stat)) %>% 
+#   group_by(locus) %>%
+#   mutate(isTarget = stringr::str_detect(locus, pattern="LVA_002048")) %>%
+#   mutate(isTarget = ifelse(isTarget, "LVA_002048", "")) %>% 
+#   ungroup() %>% arrange(desc(isTarget))
+# diff_gene$isTarget[diff_gene$isTarget==""] <- " "
+
+# x <- diff_gene %>% select(Log2fc, p_value) %>%
+#   filter(Log2fc!=Inf) %>%
+#   as.matrix() %>% 
+#   pvclust(method.hclust="ward", method.dist="euclidean")
+# plot(x)
+```
+
+```{r}
+# diff_gene %>% 
+#   left_join(unique(select(x, locus, Biological.Process))) %>%
+#   filter(Ctl>2, NaF>2) %>%
+#   ggplot(aes(x=Log2fc, y=(p_value), color=Biological.Process)) +
+#   geom_hline(yintercept = (0.05), color="black", linetype=2) +
+#   geom_hline(yintercept = (0.001), color="red", alpha=0.5) +
+#   geom_point() +
+#   geom_point(aes(alpha=isTarget), size=6, color="blue", shape=8) +
+#   # scale_color_continuous_tableau(name="p-value") + #xlim(-12, 12) +
+#   scale_alpha_manual(values=c(" "=0, "LVA_002048"=0.5)) + guides(alpha=F) +
+#   scale_y_log10() +
+#   theme_fivethirtyeight() + theme(axis.title=element_text()) + 
+#   labs(x="Log₂(Fold Change)", y="p-value", title="p-value by Log₂(Fold Change)",
+#        subtitle="Gene of interest designated by the blue star")
+# citation.date()
+
+df <- diff_gene %>% 
+  left_join({
+    select(x, locus, Common.Name, Biological.Process) %>%
+      filter(locus!="LVA_000407") %>%
+      unique()
+  }) %>%
+  filter(Ctl>2, NaF>2)
+
+df %>%
+  ggplot(aes(x=p_value, y=Log2fc)) +
+  geom_point(size=1, color="grey", alpha=0.5) +
+  geom_point(aes(color=Biological.Process), size=2, alpha=0.75) +
+  geom_label_repel(data=filter(df, isTarget!=" "), show.legend=F,
+             aes(label=Common.Name, color=Biological.Process)) +
+  geom_point(data=filter(df, isTarget!=" "), show.legend=F,
+             size=6, shape=8, aes(color=Biological.Process)) +
+  scale_x_reverse() + guides(alpha=F) +
+  scale_color_brewer(name="Biological Process\n(GO annotation)", palette = "Dark2")+
+  
+  theme_fivethirtyeight() + theme(axis.title=element_text()) + 
+  labs(y="Log₂(Fold Change)", x="p-value", title="Log₂(Fold Change) by p-value",
+       subtitle="Gene of interest designated by the blue star")
+citation.date()
+```
+
+The dashed black line represnets a `p-value = 0.05` and the solid red line reprsents a `p-value = 0.001`
+
+```{r, include=F}
+diff_gene %>%
+  ggplot(aes(x=value_1, y=value_2, color=Log2fc, alpha=-log10(p_value))) + 
+  geom_abline(slope=1, intercept=0) + 
+  geom_point() +
+  geom_point(data=filter(diff_gene, isTarget!=" "), aes(x=value_1, y=value_2), 
+             size=6, color="blue", shape=8, show.legend=F) +
+  scale_alpha_continuous(trans="reverse") +# guides(alpha=F) + 
+  scale_x_log10(labels=scales::comma) + scale_y_log10(labels=scales::comma) +
+  scale_color_gradient2(name="Log₂(Fold Change)", low="red", mid="grey", high="blue") +
+  guides(color=F) +
+  theme_fivethirtyeight() + theme(axis.title=element_text()) + 
+  labs(x="Control", y="NaF", title="Control vs NaF expression",
+       subtitle="Gene of interest designated by the blue star")
+```
+
+```{r}
+df %>%
+  ggplot(aes(x=Ctl, y=NaF, color=Biological.Process, alpha=p_value)) + 
+  geom_abline(slope=1, intercept=0) + 
+  
+  geom_point(size=1, color="grey", alpha=0.5) +
+  geom_point(aes(color=Biological.Process), size=2, alpha=0.75) +
+#   geom_label_repel(data=filter(df, isTarget!=" "), show.legend=F,
+#              aes(label=Common.Name, color=Biological.Process), nudge_x=100) +
+  geom_point(data=filter(df, isTarget!=" "), show.legend=F,
+             size=6, shape=8, aes(color=Biological.Process)) +
+  
+  scale_color_brewer(name="Biological Process\n(GO annotation)", palette = "Dark2")+
+  scale_alpha_continuous(trans="reverse") +
+  scale_x_log10(labels=scales::comma) + scale_y_log10(labels=scales::comma) +
+  theme_fivethirtyeight() + theme(axis.title=element_text()) + 
+  labs(x="Control (FPKM)", y="NaF (FPKM)", title="Control vs NaF expression",
+       subtitle="Lv-AcheL_3 designated by the star")
+citation.date()
+```
+
+<hr>
+
+```{r}
+# df <- diff_gene %>%
+#   mutate(
+#     locus = stringr::str_extract(locus, "LVA.+-RA"),
+#     locus = stringr::str_replace_all(locus, "-RA", "")) %>%
+#   group_by(locus) %>%
+#   top_n(1, wt=abs(Log2fc)) %>%
+#   filter(!is.na(locus)) %>%
+#   select(locus, Control=value_1, NaF=value_2) 
+# 
+# row.names(df) <- df$locus
+# df$locus <- NULL
+# df %>% 
+#   qplot(data=., x=NaF, y=Control)
+#   t() %>% cor(use = "pairwise.complete.obs")
+```
+
+```{r}
+data_frame(
+  Hours    = c(0, 12.85, 24, 38.57, 48, 62.57),
+  Activity = c(0, 0.059, 0.529, 3.94, 7.24, 10.83),
+  Stage    = c(NA, "Blastula", "Gastrula", "Prism", "Pluteus", NA)
+) %>%
+  ggplot(aes(x=Hours, y=Activity, label=Stage)) +
+  geom_path() + geom_point() + geom_label_repel(force=120) +
+  theme_fivethirtyeight() + theme(axis.title=element_text()) + 
+  labs(x="Development (h)", y="Activity (Units/10⁶ embryos)", 
+       title="AChE Activity in Pseudocentrotus depressus",
+       subtitle="Adapted from Ozaki, 1974")
+```
+
+```
+--- LICENSE ---
+
+Copyright (C) 2016 Hunter Ratliff
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+In the spirit of [Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html),
+below is the information About the R Session at the time it was compiled:
+
+```{r Session_info, echo=TRUE, collapse=TRUE}
+devtools::session_info()
+```
